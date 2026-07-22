@@ -36,6 +36,9 @@ def main():
     if st.button("Create passport ones"):
         st.session_state.stage = "passport"
 
+    if st.button("Social media "):
+        st.session_state.stage = "social"
+
 
 
 
@@ -158,6 +161,12 @@ def social():
     if st.button("5. Facebook Banner"):
         st.session_state.stage = "face"
 
+    st.write(" ")
+    st.write(" ")
+
+    if st.button("Return Home"):
+        st.session_state.stage = "social"
+
 
 def ipost():
     st.header("Instagram Post")
@@ -171,12 +180,12 @@ def ipost():
 
     size = image.resize((w, h))
 
-    st.image(size)
+    st.image(size, caption="Instagram Post 1080x1080")
 
     st.write(" ")
 
-    if st.button("Return home"):
-        st.session_state.stage = "main"
+    if st.button("Return"):
+        st.session_state.stage = "social"
 
 
 def istory():
@@ -193,12 +202,12 @@ def istory():
 
     st.write(" ")
 
-    st.image(size)
+    st.image(size, caption="Instagram Story 1080x1920")
 
     st.write(" ")
 
-    if st.button("Return home"):
-        st.session_state.stage = "main"
+    if st.button("Return "):
+        st.session_state.stage = "social"
 
 def ythumb():
     st.header("Youtube Thumbnail")
@@ -214,12 +223,12 @@ def ythumb():
 
     st.write(" ")
 
-    st.image(size)
+    st.image(size, caption="Youtube Thumbnail 1280x720")
 
     st.write(" ")
 
-    if st.button("Return Home"):
-        st.session_state.stage = "main"
+    if st.button("Return"):
+        st.session_state.stage = "social"
 
 def link():
     image = Image.open(img)
@@ -234,13 +243,13 @@ def link():
     resize = image.resize((wi, hi))
 
     st.write(" ")
-
-    st.image(resize)
+ 
+    st.image(resize, caption="Linkedin 1584x396")
 
     st.write(" ")
 
-    if st.button("Return Home"):
-        st.session_state.stage = "main"
+    if st.button("Return"):
+        st.session_state.stage = "social"
 
 def face():
     st.header("Facebook Banner")
@@ -254,12 +263,12 @@ def face():
 
     size = image.resize((w, h))
 
-    st.image(size)
+    st.image(size, caption= "Facebook 820x312")
 
     st.write(" ")
 
-    if st.button("Return Home"):
-        st.session_state.stage = "main"
+    if st.button("Return"):
+        st.session_state.stage = "social"
 
 
 
@@ -288,5 +297,7 @@ elif st.session_state.stage== "face":
 elif st.session_state.stage == "link":
     link()
 
+elif st.session_state.stage == "social":
+    social()
 
 
