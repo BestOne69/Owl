@@ -154,6 +154,10 @@ def social():
     if st.button("4. LinkedIn"):
         st.session_state.stage = "link"
 
+    st.write(" ")
+    if st.button("5. Facebook Banner"):
+        st.session_state.stage = "face"
+
 
 def ipost():
     st.header("Instagram Post")
@@ -206,9 +210,56 @@ def ythumb():
 
     hi = 720
 
-    
+    size = image.resize((wi,hi))
 
+    st.write(" ")
 
+    st.image(size)
+
+    st.write(" ")
+
+    if st.button("Return Home"):
+        st.session_state.stage = "main"
+
+def link():
+    image = Image.open(img)
+
+    st.header("LinkedIn Banner")
+    st.write(" ")
+
+    wi = 1584
+
+    hi = 396
+
+    resize = image.resize((wi, hi))
+
+    st.write(" ")
+
+    st.image(resize)
+
+    st.write(" ")
+
+    if st.button("Return Home"):
+        st.session_state.stage = "main"
+
+def face():
+    st.header("Facebook Banner")
+
+    st.write(" ")
+
+    image = Image.open(img)
+
+    w = 820
+    h = 312
+
+    size = image.resize((w, h))
+
+    st.image(size)
+
+    st.write(" ")
+
+    if st.button("Return Home"):
+        st.session_state.stage = "main"
 
 
 
@@ -221,5 +272,21 @@ elif st.session_state.stage == "metadata":
 
 elif st.session_state.stage == "passport":
     passport()
+
+elif st.session_state.stage == "ipost":
+    ipost()
+
+elif st.session_state.stage == "istory":
+    istory()
+
+elif st.session_state.stage == "ythumb":
+    ythumb()
+
+elif st.session_state.stage== "face":
+    face()
+
+elif st.session_state.stage == "link":
+    link()
+
 
 
