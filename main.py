@@ -31,6 +31,11 @@ def main():
     if st.button("Extract Metadata"):
         st.session_state.stage = "metadata"
 
+    st.write(" ")
+
+    if st.button("Create passport ones"):
+        st.session_state.stage = "passport"
+
 
 
 
@@ -63,7 +68,7 @@ def metadata():
 
     dpi = image.info.get("dpi")
 
-    st.write("DPI : " ,dpi:.2f())
+    st.write("DPI : " ,dpi)
 
     data = image.getexif()
 
@@ -73,14 +78,139 @@ def metadata():
             tag_id
         )
 
-        st.write(tag_name,":", value)
+        st.write(tag_name,":", str(value))
     
     st.write(" ")
+    st.write(" ")
+
+    if st.button("Return home"):
+        st.session_state.stage = "main"
+
+        
 
 
 
 def passport():
-    pass
+    st.header("Passport Photos")
+
+    st.write(" ")
+
+    image = Image.open(img)
+
+
+
+    width = 413
+    height = 531
+
+    passpor = image.resize((width, height))
+
+
+    st.image(passpor)
+
+    st.write(" ")
+
+    copies = st.slider("Number of Copies : ", 1, 8, 20)
+
+    sheet = Image.new("RGB", (1200,1800), "white")
+
+    x = 50
+
+    y = 50
+
+    for i in range(copies):
+        sheet.paste(passpor, (x,y))
+
+        x += passpor.width + 20
+        
+        if x + passpor.width > 1200:
+            x = 50
+
+            y += passpor.height + 20
+
+    
+    st.image(sheet)
+            
+def social():
+    st.header("Social Media Resizer")
+
+    st.write(" ")
+    st.write(" ")
+
+    if st.button("1. Instagram Post"):
+        st.session_state.stage = "ipost"
+
+    st.write(" ")
+
+    if st.button("2. Instagram Story"):
+        st.session_state.stage = "istory"
+    st.write(" ")
+
+    if st.button("3. Youtube Thumb"):
+
+        st.session_state.stage = "ythumb"
+
+    st.write(" ")
+
+    if st.button("4. LinkedIn"):
+        st.session_state.stage = "link"
+
+
+def ipost():
+    st.header("Instagram Post")
+
+    image = Image.open(img)
+
+    st.write(" ")
+
+    w = 1080
+    h = 1080
+
+    size = image.resize((w, h))
+
+    st.image(size)
+
+    st.write(" ")
+
+    if st.button("Return home"):
+        st.session_state.stage = "main"
+
+
+def istory():
+    st.header("Instagram Story")
+
+    st.write(" ")
+
+    image = Image.open(img)
+
+    w = 1080
+    h = 1920
+
+    size = image.resize((w,h))
+
+    st.write(" ")
+
+    st.image(size)
+
+    st.write(" ")
+
+    if st.button("Return home"):
+        st.session_state.stage = "main"
+
+def ythumb():
+    st.header("Youtube Thumbnail")
+    st.write(" ")
+
+    image = Image.open(img)
+
+    wi = 1280
+
+    hi = 720
+
+    
+
+
+
+
 
 
 if st.session_state.stage == "main":
@@ -88,5 +218,8 @@ if st.session_state.stage == "main":
 
 elif st.session_state.stage == "metadata":
     metadata()
+
+elif st.session_state.stage == "passport":
+    passport()
 
 
