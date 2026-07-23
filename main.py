@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image, ImageEnhance
 from PIL.ExifTags import TAGS
+from io import BytesIO
 
 
 stage = "main"
@@ -28,17 +29,24 @@ def main():
     st.write(" ")
     st.write(" ")
 
-    if st.button("Extract Metadata"):
+    if st.button("Extract Metadata", type="primary"):
         st.session_state.stage = "metadata"
 
     st.write(" ")
 
-    if st.button("Create passport ones"):
+    if st.button("Create passport ones", type="primary"):
         st.session_state.stage = "passport"
 
-    if st.button("Social media "):
+    st.write(" ")
+
+    if st.button("Social media ", type="primary"):
         st.session_state.stage = "social"
 
+
+    st.write(" ")
+
+    if st.button("Metadata Cleaner", type="primary"):
+        st.session_state.stage = "cleaner"
 
 
 
@@ -132,6 +140,10 @@ def passport():
 
     
     st.image(sheet)
+    st.write(" ")
+
+    if st.button("Return Home"):
+        st.session_state.stage = "main"
             
 def social():
     st.header("Social Media Resizer")
@@ -164,7 +176,7 @@ def social():
     st.write(" ")
     st.write(" ")
 
-    if st.button("Return Home"):
+    if st.button("Return Home", type="primary"):
         st.session_state.stage = "social"
 
 
@@ -184,7 +196,7 @@ def ipost():
 
     st.write(" ")
 
-    if st.button("Return"):
+    if st.button("Return", type="primary"):
         st.session_state.stage = "social"
 
 
@@ -206,7 +218,7 @@ def istory():
 
     st.write(" ")
 
-    if st.button("Return "):
+    if st.button("Return", type="primary"):
         st.session_state.stage = "social"
 
 def ythumb():
@@ -227,7 +239,7 @@ def ythumb():
 
     st.write(" ")
 
-    if st.button("Return"):
+    if st.button("Return", type="primary"):
         st.session_state.stage = "social"
 
 def link():
@@ -270,6 +282,58 @@ def face():
     if st.button("Return"):
         st.session_state.stage = "social"
 
+def cleaner():
+    st.header("Metadata")
+
+    st.write(" ")
+    st.write(" ")
+
+    image = Image.open(img)
+
+    st.image(image)
+
+    st.subheader("original metadata")
+
+    data = image.getexif()
+
+    for tag_id, value in data.items():
+        tag_name = TAGS.get(
+            tag_id,
+            tag_id
+    
+
+        )
+
+        st.write(tag_name,":",int(value))
+
+        clean = Image.new(image.mode, image.size)
+
+        st.write(" ")
+
+        clean.putdata(list(image.getdata()))
+
+        st.image(clean)
+        st.write(" ")
+
+        buffer = BytesIO()
+
+        
+        clean =   clean.convert("RGB")
+
+        clean.save(buffer, format="JPEG")
+
+        st.download_button("Download Clean one", buffer.getvalue())
+
+        st.write(" ")
+
+        if st.button("Return Home", type="primary"):
+            st.session_state.stage = "main"
+
+
+        
+
+
+
 
 
 
@@ -299,5 +363,7 @@ elif st.session_state.stage == "link":
 
 elif st.session_state.stage == "social":
     social()
+elif st.session_state.stage == "cleaner":
+    cleaner()
 
 
