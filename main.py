@@ -177,7 +177,7 @@ def social():
     st.write(" ")
 
     if st.button("Return Home", type="primary"):
-        st.session_state.stage = "social"
+        st.session_state.stage = "main"
 
 
 def ipost():
@@ -330,7 +330,6 @@ def cleaner():
             st.session_state.stage = "main"
 
 
-        
 
 
 
